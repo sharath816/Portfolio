@@ -245,7 +245,7 @@
     .project-card {
       background: var(--project-bg);
       border-radius: 10px;
-      padding: 18px 22px;
+      padding: 18px 22px 56px 22px; /* Increased bottom padding */
       flex: 1 1 260px;
       min-width: 260px;
       border: 1.5px solid var(--project-border);
@@ -264,8 +264,9 @@
     }
     .github-link {
       position: absolute;
-      top: 18px;
+      bottom: 18px;
       right: 18px;
+      top: auto;
       text-decoration: none;
       color: var(--github-color);
       background: var(--github-bg);
