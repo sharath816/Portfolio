@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Name | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg: #f6f8fa;
+      --container-bg: #fff;
+      --primary: #2563eb;
+      --primary-dark: #193fa7;
+      --accent: #ff9800;
+      --text: #222;
+      --text-light: #444;
+      --border: #e0e6ed;
+      --card-bg: #f5f8ff;
+      --project-bg: #fff9f0;
+      --project-border: #ffe7c2;
+      --github-bg: #222;
+      --github-color: #fff;
+    }
+    body.dark-mode {
+      --bg: #181c24;
+      --container-bg: #232a34;
+      --primary: #8bb6f9;
+      --primary-dark: #2563eb;
+      --accent: #ffb74d;
+      --text: #f4f4f4;
+      --text-light: #bfc9d1;
+      --border: #283042;
+      --card-bg: #232a34;
+      --project-bg: #232a34;
+      --project-border: #444e5e;
+      --github-bg: #f4f4f4;
+      --github-color: #232a34;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      line-height: 1.6;
+      padding: 40px 0;
+      transition: background 0.4s, color 0.4s;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: var(--container-bg);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.09);
+      padding: 32px 40px;
+      animation: fadeInMain 1.2s cubic-bezier(.5, .2, .3, 1);
+      transition: background 0.4s;
+      position: relative;
+    }
+    @keyframes fadeInMain {
+      from { opacity: 0; transform: translateY(40px);}
+      to   { opacity: 1; transform: translateY(0);}
+    }
+    /* Theme Toggle Button */
+    .theme-toggle {
+      position: fixed;
+      top: 28px;
+      right: 48px;
+      background: var(--container-bg);
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.04);
+      transition: background 0.3s, border 0.3s, box-shadow 0.3s, transform 0.3s;
+      z-index: 100;
+    }
+    .theme-toggle:hover {
+      border: 2px solid var(--primary);
+      background: var(--card-bg);
+      transform: scale(1.08) rotate(-8deg);
+      box-shadow: 0 0 20px var(--primary);
+    }
+    .theme-toggle span {
+      font-size: 1.6rem;
+      transition: color 0.3s;
+    }
+    /* Typing Intro */
+    .typing {
+      width: 18ch;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid var(--primary);
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+      color: var(--primary);
+      animation: typing 2.5s steps(18), blinkCursor .6s step-end infinite alternate;
+    }
+    @keyframes typing { from {width: 0;} to {width: 18ch;} }
+    @keyframes blinkCursor { 50% { border-color: transparent; } }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      animation: fadeInDown 1s .3s both;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px);}
+      to   { opacity: 1; transform: translateY(0);}
+    }
+    .resume-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      margin-top: 10px;
+      transition: background 0.2s, box-shadow 0.3s;
+      animation: fadeInUp 1s .7s both, glowPulse 2s infinite alternate;
+      box-shadow: 0 0 12px var(--primary);
+    }
+    .resume-btn:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 0 32px var(--primary);
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px);}
+      to   { opacity: 1; transform: translateY(0);}
+    }
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 8px var(--primary);}
+      100% { box-shadow: 0 0 32px var(--primary);}
+    }
+    .profile-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--primary);
+      box-shadow: 0 4px 16px rgba(60,80,120,0.10);
+      margin-left: 40px;
+      animation: pulse 2.5s infinite, fadeInRight 1s .6s both;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1);}
+      50%      { transform: scale(1.06);}
+    }
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(40px);}
+      to   { opacity: 1; transform: translateX(0);}
+    }
+    .divider {
+      width: 100%;
+      height: 28px;
+      background: linear-gradient(90deg, #2563eb 0, #ff9800 100%);
+      background-size: 200% 100%;
+      animation: dividerMove 3s linear infinite alternate;
+      border-radius: 16px;
+      margin: 40px 0;
+      opacity: 0.15;
+    }
+    @keyframes dividerMove {
+      0% { background-position: 0 0;}
+      100% { background-position: 100% 0;}
+    }
+    .section {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s, transform 0.7s;
+    }
+    .section.visible {
+      opacity: 1;
+      transform: none;
+    }
+    /* Cards */
+    .card, .edu-card, .skill-card, .project-card {
+      transition: transform 0.3s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s, background 0.4s, border 0.4s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .card:hover, .edu-card:hover, .skill-card:hover, .project-card:hover {
+      transform: translateY(-8px) scale(1.04) rotateZ(-1deg);
+      box-shadow: 0 8px 32px rgba(37,99,235,0.15);
+    }
+    /* Education */
+    .edu-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 10px;
+    }
+    .edu-card {
+      background: linear-gradient(90deg, var(--card-bg) 0%, var(--container-bg) 100%);
+      border-left: 5px solid var(--primary);
+      border-radius: 8px;
+      padding: 16px 24px;
+    }
+    .edu-title {
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+    .edu-details {
+      font-size: 1rem;
+      margin-top: 4px;
+      color: var(--text);
+    }
+    /* Skills */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 10px;
+    }
+    .skill-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 16px 20px;
+      min-width: 170px;
+      flex: 1 1 170px;
+      border: 1.5px solid var(--border);
+    }
+    .skill-title {
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .skill-desc {
+      font-size: 0.96rem;
+      color: var(--text-light);
+    }
+    /* Projects */
+    .projects-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .project-card {
+      background: var(--project-bg);
+      border-radius: 10px;
+      padding: 18px 22px;
+      flex: 1 1 260px;
+      min-width: 260px;
+      border: 1.5px solid var(--project-border);
+      position: relative;
+    }
+    .project-title {
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 1.15rem;
+      margin-bottom: 6px;
+    }
+    .project-desc {
+      font-size: 0.98rem;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+    .github-link {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      text-decoration: none;
+      color: var(--github-color);
+      background: var(--github-bg);
+      padding: 6px 12px;
+      border-radius: 7px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      box-shadow: 0 0 8px var(--accent);
+      transition: background 0.2s, color 0.2s;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .github-link svg {
+      margin-right: 2px;
+      animation: githubBlink 1.2s infinite alternate;
+    }
+    @keyframes githubBlink {
+      0% { filter: drop-shadow(0 0 2px var(--accent));}
+      100% { filter: drop-shadow(0 0 8px var(--accent));}
+    }
+    .github-link:hover {
+      background: var(--accent);
+      color: var(--github-bg);
+      box-shadow: 0 0 20px var(--accent);
+    }
+    /* Additional Info */
+    .additional-list {
+      margin-top: 10px;
+      padding-left: 18px;
+    }
+    .additional-list li {
+      margin-bottom: 7px;
+      font-size: 1.01rem;
+      color: var(--text);
+    }
+    @media (max-width: 700px) {
+      .container { padding: 18px 8px;}
+      .header { flex-direction: column-reverse; align-items: flex-start;}
+      .profile-photo { margin: 0 0 18px 0;}
+      .skills-grid, .projects-grid { flex-direction: column;}
+      .theme-toggle { top: 10px; right: 10px;}
+      .typing { font-size: 1.3rem;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">
+    <span id="theme-icon">🌙</span>
+  </button>
+  <div class="container">
+    <!-- Typing Intro -->
+    <div class="typing">Hi, I'm Sharath M T</div>
+    <!-- Header: Name & Profile Photo -->
+    <div class="header">
+      <div class="header-info">
+        <a class="resume-btn" href="Sharath_Resume.pdf" download>
+          &#128229; Download Resume
+        </a>
+      </div>
+      <img class="profile-photo" src="1640794770365.jpg" alt="Profile Photo">
+    </div>
+    <div class="divider"></div>
+    <!-- Summary Section -->
+    <div class="section">
+      <h2>Summary</h2>
+      <p>
+        Computer Science graduate (June 2025) with strong foundations in C++, Python, and Data Structures & Algorithms. Passionate about building scalable, real-world applications and eager to contribute to impactful engineering teams. Actively seeking an entry-level Software Engineer role to apply my skills, grow rapidly, and solve meaningful problems.
+      </p>
+    </div>
+    <div class="divider"></div>
+    <!-- Education Section -->
+    <div class="section">
+      <h2>Education</h2>
+      <div class="edu-timeline">
+        <div class="edu-card card">
+          <div class="edu-title">Bachelor of Engineering in Computer Science</div>
+          <div class="edu-details">Acharya Institute of Technology, 2021 - 2025</div>
+          <div class="edu-details">Grade(CGPA) : 8.48</div>
+        </div>
+        <div class="edu-card card">
+          <div class="edu-title">Pre-University College (  Class 12th )</div>
+          <div class="edu-details">Smt Vidhya P Hanchinmani P U Science College, 2019 - 2021</div>
+          <div class="edu-details">Percentage(%) : 90%</div>
+        </div>
+        <div class="edu-card card">
+          <div class="edu-title">SSLC ( Class 10th )</div>
+          <div class="edu-details">Excellent English Medium High School, 2018 - 2019</div>
+          <div class="edu-details">Percentage(%) : 93.12%</div>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <!-- Skills Section -->
+    <div class="section">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card card">
+          <div class="skill-title">Programming Skills</div>
+          <div class="skill-desc">C, C++, Python</div>
+        </div>
+         <div class="skill-card card">
+          <div class="skill-title">Databases</div>
+          <div class="skill-desc">MySQL</div>
+        </div>
+         <div class="skill-card card">
+          <div class="skill-title">Frontend</div>
+          <div class="skill-desc">HTML, CSS, ReactJs</div>
+        </div>
+         <div class="skill-card card">
+          <div class="skill-title">Technical Knowledge</div>
+          <div class="skill-desc">Data Structures and Algorithms, OOPS, DBMS, Operating Systems</div>
+        </div>
+        <div class="skill-card card">
+          <div class="skill-title">Developing Tools</div>
+          <div class="skill-desc">M.S Word,Visual Studio Code, Android Studio, Figma, Docker</div>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <!-- Projects Section -->
+    <div class="section">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card card">
+          <div class="project-title">Rule Engine with AST</div>
+          <div class="project-desc">
+            <div style="color: #a5e8f9;">Tech Stack: HTML, CSS, JavaScript</div>
+              <p>★ Rule engine assesses user eligibility based on age, department, salary, and experience.</p>
+              <p>★ Utilizes an Abstract Syntax Tree (AST) for real-time evaluation of rules.</p>
+              <p>★ Interactive user interface developed with HTML, CSS, and JavaScript for straightforward rule input and validation.</p>
+              <p>★ Optimized for performance and scalability.</p>
+          </div>
+          <a class="github-link" href="https://github.com/sharath816/Rule-Engine-with-AST" target="_blank">
+            <svg width="20" height="20" fill="currentColor" style="vertical-align:middle;">
+              <use xlink:href="#github-icon"></use>
+            </svg>
+            GitHub
+          </a>
+        </div>
+        <div class="project-card card">
+          <div class="project-title">Real-Time Data Processing System</div>
+          <div class="project-title">for Weather Monitoring</div>
+          <div class="project-desc">
+            <div style="color: #a5e8f9;">Tech Stack: HTML, CSS, JavaScript, OpenWeatherAPI</div>
+              <p>★ Rule engine assesses user eligibility based on age, department, salary, and experience.</p>
+              <p>★ Utilizes an Abstract Syntax Tree (AST) for real-time evaluation of rules.</p>
+              <p>★ Interactive user interface developed with HTML, CSS, and JavaScript for straightforward rule input and validation.</p>
+              <p>★ Optimized for performance and scalability.</p>
+          </div>
+          <a class="github-link" href="https://github.com/sharath816/Weather_Monitor_System" target="_blank">
+            <svg width="20" height="20" fill="currentColor" style="vertical-align:middle;">
+              <use xlink:href="#github-icon"></use>
+            </svg>
+            GitHub
+          </a>
+        </div>
+        <div class="project-card card">
+          <div class="project-title">PubMed Research Paper Fetcher</div>
+          <div class="project-desc">
+            <div style="color: #a5e8f9;">Tech Stack: Python, CLI, XML</div>
+              <p>★ A CLI tool to fetch research papers from PubMed based on user queries.</p>
+              <p>★ Filters out papers affiliated with pharmaceutical or biotech companies.</p>
+              <p>★ Parses XML metadata to extract titles, abstracts, authors, and affiliations.</p>
+              <p>★ Saves filtered results in CSV or JSON format for analysis.</p>
+              <p>★ Automates bulk extraction and handles large datasets efficiently using Python.</p>
+              <p></p> 
+          </div>
+          <a class="github-link" href="https://github.com/sharath816/Pubmed_fetcher" target="_blank">
+            <svg width="20" height="20" fill="currentColor" style="vertical-align:middle;">
+              <use xlink:href="#github-icon"></use>
+            </svg>
+            GitHub
+          </a>
+        </div>
+        <div class="project-card card">
+          <div class="project-title">Medical Report Analyzer</div>
+          <div class="project-desc">
+            <div style="color: #a5e8f9;">Tech Stack: React JS, Azure, AWS, Google GenAI API, MySQL</div>
+              <p>★ AI-driven application for analyzing medical reports and generating multilingual descriptions.</p>
+              <p>★ Integration of Google GenAI API for precise medical report summarization.</p>
+              <p>★ Speech synthesis feature for voice-based report reading..</p>
+              <p>★ Frontend developed using React JS; cloud processing powered by Azure and AWS.</p>
+              <p>★ Secure and scalable database established with MySQL for efficient report storage.</p> 
+          </div>
+          <!-- <a class="github-link" href=" " target="_blank">
+            <svg width="20" height="20" fill="currentColor" style="vertical-align:middle;">
+              <use xlink:href="#github-icon"></use>
+            </svg>
+            GitHub
+          </a> -->
+        </div>
+        
+      </div>
+    </div>
+    <div class="divider"></div>
+    <!-- Additional Info Section -->
+    <div class="section">
+      <h2>Additional Info</h2>
+      <ul class="additional-list">
+        <li>Languages: Kannada, English, Hindi, Telugu</li>
+        <li>Hobbies: Photography, Travelling</li>
+      </ul>
+    </div>
+  </div>
+  <!-- GitHub SVG Icon -->
+  <svg style="display:none;">
+    <symbol id="github-icon" viewBox="0 0 16 16">
+      <path d="M8 .2a8 8 0 00-2.53 15.6c.4.07.55-.17.55-.38v-1.32c-2.22.48-2.69-1.07-2.69-1.07-.36-.92-.88-1.16-.88-1.16-.72-.5.05-.49.05-.49.8.06 1.22.82 1.22.82.71 1.22 1.87.87 2.33.67.07-.51.28-.87.5-1.07-1.77-.2-3.64-.89-3.64-3.96 0-.87.31-1.59.82-2.15-.08-.2-.36-1.01.08-2.1 0 0 .67-.21 2.2.82a7.6 7.6 0 012-.27c.68 0 1.36.09 2 .27 1.52-1.03 2.19-.82 2.19-.82.45 1.09.17 1.9.09 2.1.51.56.82 1.28.82 2.15 0 3.08-1.87 3.75-3.65 3.95.29.25.54.74.54 1.5v2.23c0 .21.15.46.55.38A8 8 0 008 .2"/>
+    </symbol>
+  </svg>
+  <script>
+    // Theme toggle logic
+    const toggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    // Load previous theme
+    if(localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      themeIcon.textContent = '☀️';
+    }
+    toggleBtn.onclick = function() {
+      document.body.classList.toggle('dark-mode');
+      if(document.body.classList.contains('dark-mode')) {
+        themeIcon.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        themeIcon.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      }
+    };
+    // Scroll-triggered section animation
+    function revealSections() {
+      document.querySelectorAll('.section').forEach(section => {
+        let rect = section.getBoundingClientRect();
+        if(rect.top < window.innerHeight - 80) {
+          section.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', revealSections);
+    window.addEventListener('load', revealSections);
+  </script>
+</body>
+</html>
